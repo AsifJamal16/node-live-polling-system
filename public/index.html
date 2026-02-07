@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>live polling system</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="poll-box">
+  <h2 id="question"></h2>
+
+  <button onclick="vote('javascript')">javascript</button>
+  <button onclick="vote('python')">python</button>
+  <button onclick="vote('cpp')">c++</button>
+
+  <div id="result"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
