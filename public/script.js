@@ -1,18 +1,31 @@
 const socket = io();
 
-const question = document.getElementById('question');
-const result = document.getElementById('result');
+const questionEl = document.getElementById('question');
+const resultEl = document.getElementById('result');
+const buttons = document.querySelectorAll('button');
 
 socket.on('pollData', (poll) => {
-  question.innerText = poll.question;
+  questionEl.innerText = poll.question;
 
-  result.innerHTML = `
-    javascript: ${poll.options.javascript}<br>
-    python: ${poll.options.python}<br>
-    c++: ${poll.options.cpp}
-  `;
+  resultEl.innerHTML = "";
+
+  for (let option in poll.options) {
+    const data = poll.options[option];
+
+    resultEl.innerHTML += `
+      <div class="result-item">
+        <strong>${option}</strong> - ${data.votes} votes (${data.percentage}%)
+        <div class="bar">
+          <div class="fill" style="width:${data.percentage}%"></div>
+        </div>
+      </div>
+    `;
+  }
 });
 
-function vote(option){
+function vote(option) {
   socket.emit('vote', option);
+
+  // Disable voting after one click
+  buttons.forEach(btn => btn.disabled = true);
 }
